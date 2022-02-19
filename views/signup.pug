@@ -1,0 +1,73 @@
+extends layout 
+
+block content 
+  if errors 
+    .alert.alert-danger(role='alert')
+    p Correct the following errors: 
+    ul 
+      for error in errors 
+        li!= error.msg 
+
+  form(action='', method='post')
+    .mb-3 
+      label.form-label(for='username') Username 
+      input.form-control(
+        id='username'
+        name='username'
+        type='text'
+        value!=user.username
+        required=true 
+        maxlength=100
+        placeholder='Username'
+      )
+    .mb-3 
+      label.form-label(for='password') Password 
+      input.form-control(
+        id='password'
+        name='password'
+        type='password'
+        required=true 
+        maxlength=100
+        placeholder='Password'
+      )
+    .mb-3 
+      label.form-label(for='password2') Enter password again
+      input.form-control(
+        id='password2'
+        name='password2'
+        type='password'
+        required=true 
+        maxlength=100
+        placeholder='Password'
+      )
+    .mb-3 
+      label.form-label(for='nickname') Nickname 
+      input.form-control(
+        id='nickname'
+        name='nickname'
+        type='text'
+        value!=user.nickname
+        required=true 
+        maxlength=100
+        placeholder='Nickname'
+      )
+    .mb-3 
+      label.form-label(for='inviteCode') Invite code
+      input.form-control(
+        id='inviteCode'
+        name='inviteCode'
+        type='text'
+        required=true 
+        maxlength=100
+        placeholder='Invite code'
+      )
+    .mb-3 
+      input.btn.btn-primary(
+        type='submit'
+      )
+      | 
+      a.btn.btn-outline-secondary(
+        href='./'
+        role='button'
+      ) Cancel
+    

@@ -1,5 +1,18 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h1!= title
+
+  if (!currentUser)
+    p.alert.alert-warning Sign in to see who wrote each message.
+
+  section
+    each message in messages 
+      article 
+        - const author = currentUser ? message.user.nickname : 'Anonymous'
+        h2 !{author} posted at 
+          time(datetime=message.createdAt) !{message.createdAt}
+        p !{message.text}
+
+    else 
+      p.alert.alert-danger No messages
