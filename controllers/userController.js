@@ -6,6 +6,9 @@ const User = require('../models/user');
 
 const INVITECODE = process.env.INVITECODE;
 
+
+// SIGN UP
+
 exports.getSignupForm = (req, res, next) => {
   res.render(
     'signup',
@@ -14,7 +17,7 @@ exports.getSignupForm = (req, res, next) => {
       user: {}
     }
   );
-}
+};
 
 exports.getSignupValidationRules = () => {
   return [
@@ -35,7 +38,7 @@ exports.getSignupValidationRules = () => {
     body('giveAdminRole')
       .optional({checkFalsy: true}).escape(),
   ];
-}
+};
 
 exports.processSignupForm = async (req, res, next) => {
   try {
@@ -92,4 +95,17 @@ exports.processSignupForm = async (req, res, next) => {
   } catch (err) {
     return next(err);
   }
-}
+};
+
+
+// SIGN IN
+
+exports.getSigninValidationRules = () => {
+  return [
+    body('username')
+      .trim().isLength({ min: 1}).escape().withMessage('Username required')
+      .isLength({ max: 100}).withMessage('Username must be less than 100 characters'),
+    body('password')
+      .trim().isLength({ min: 1}).escape().withMessage('Password required'),
+  ];
+};

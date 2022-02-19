@@ -54,6 +54,7 @@ app.use(session({
 }));
 
 // set up LocalStrategy
+const User = require('./models/user');
 passport.use(
   new LocalStrategy((username, password, done) => {
     User.findOne({ username }, (err, user) => {
@@ -70,6 +71,7 @@ passport.use(
           return done(null, user);
         } else {
           // no match
+          console.log(`${password} doesn't match ${user.password}`);
           return done(null, false, { message: 'Incorrect password' });
         }
       });
