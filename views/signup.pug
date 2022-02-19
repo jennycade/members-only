@@ -3,10 +3,10 @@ extends layout
 block content 
   if errors 
     .alert.alert-danger(role='alert')
-    p Correct the following errors: 
-    ul 
-      for error in errors 
-        li!= error.msg 
+      p Correct the following errors: 
+      ul 
+        for error in errors 
+          li!= error.msg 
 
   form(action='', method='post')
     .mb-3 
@@ -49,7 +49,6 @@ block content
         value!=user.nickname
         required=true 
         maxlength=100
-        placeholder='Nickname'
       )
     .mb-3 
       label.form-label(for='inviteCode') Invite code
@@ -61,6 +60,17 @@ block content
         maxlength=100
         placeholder='Invite code'
       )
+    .mb-3.form-check.form-switch
+      input.form-check-input(
+        type='checkbox'
+        role='switch'
+        id='giveAdminRole'
+        name='giveAdminRole'
+        checked=(user.role === 'admin')
+      )
+      label.form-check-label(
+        for='giveAdminRole'
+      ) Grant admin role
     .mb-3 
       input.btn.btn-primary(
         type='submit'

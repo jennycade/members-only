@@ -8,10 +8,16 @@ const UserSchema = new Schema({
     type: String,
     required: true,
     maxlength: 100,
+    unique: true,
   },
   password: {
     type: String,
     required: true,
+  },
+  nickname: {
+    type: String,
+    required: true,
+    maxlength: 100,
   },
   role: {
     type: String,

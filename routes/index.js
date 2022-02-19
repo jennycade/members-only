@@ -9,5 +9,9 @@ router.get('/', messageController.getMessageList);
 
 // sign up form
 router.get('/sign-up', userController.getSignupForm);
+router.post('/sign-up',
+  userController.getSignupValidationRules(),
+  userController.processSignupForm
+);
 
 module.exports = router;
