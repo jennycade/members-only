@@ -1,0 +1,32 @@
+extends layout 
+
+block content 
+  if currentUser 
+    if errors 
+      .alert.alert-danger(role='alert')
+        p Correct the following errors: 
+        ul 
+          for error in errors 
+            li!= error.msg 
+
+    form(action='', method='post')
+      .mb-3 
+        label.form-label(for='messageText') Message 
+        textarea.form-control(
+          id='messageText'
+          name='messageText'
+          required=true
+        )
+      
+      .mb-3 
+        input.btn.btn-primary(
+          type='submit'
+        )
+        | 
+        a.btn.btn-outline-secondary(
+          href='./'
+          role='button'
+        ) Cancel
+  else 
+    .alert.alert-danger 
+      p You must be a registered user to post messages.

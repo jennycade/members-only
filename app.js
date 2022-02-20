@@ -12,7 +12,7 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 
 // connect to db
-const dotenv = require('dotenv').config();
+require('dotenv').config();
 const mongoDb = process.env.MONGOURI;
 mongoose.connect(
   mongoDb,

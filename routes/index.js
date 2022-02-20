@@ -53,6 +53,13 @@ passport.deserializeUser((id, done) => {
 /* home page. */
 router.get('/', messageController.getMessageList);
 
+/* messages */
+router.get('/create-message', (req, res) => {
+  res.render('createMessageForm', {title: 'Create message'});
+});
+
+/* authentication */
+
 // sign up form
 router.get('/sign-up', userController.getSignupForm);
 router.post('/sign-up',
