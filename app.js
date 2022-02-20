@@ -7,12 +7,9 @@ var logger = require('morgan');
 // for authentication
 const session = require('express-session');
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const bcrypt = require('bcryptjs');
 
 // mongoose
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
 // connect to db
 const dotenv = require('dotenv').config();
@@ -53,44 +50,8 @@ app.use(session({
   saveUninitialized: true,
 }));
 
-// set up LocalStrategy
-const User = require('./models/user');
-passport.use(
-  new LocalStrategy((username, password, done) => {
-    User.findOne({ username }, (err, user) => {
-      if (err) {
-        return done(err);
-      }
-      if (!user) {
-        // user not found
-        return done(null, false, { message: 'Incorrect username' });
-      }
-      bcrypt.compare(password, user.password, (err, res) => {
-        if (res) {
-          // match
-          return done(null, user);
-        } else {
-          // no match
-          console.log(`${password} doesn't match ${user.password}`);
-          return done(null, false, { message: 'Incorrect password' });
-        }
-      });
-    })
-  })
-);
-
-// set up sessions
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
-passport.deserializeUser((id, done) => {
-  User.findById(id, (err, user) => {
-    done(err, user);
-  });
-});
-
 // start passport
-app.use(passport.initialize());
+// app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 
@@ -100,6 +61,7 @@ app.use((req, res, next) => {
   next();
 });
 
+// routes
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
