@@ -5,7 +5,10 @@ const { body, validationResult} = require('express-validator');
 exports.getMessageList = async (req, res, next) => {
   try {
     // get the messages
-    const messages = await Message.find().sort('createdAt desc').exec();
+    const messages = await Message.find()
+      .populate('user')
+      .sort('createdAt desc')
+      .exec();
     // render
     res.render(
       'index',
