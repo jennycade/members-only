@@ -71,3 +71,21 @@ exports.processForm = async (req, res, next) => {
     return next(err);
   }
 }
+
+exports.getDeleteForm = async (req, res, next) => {
+  try {
+    const message = await Message.findById(req.params.id)
+      .populate('user')
+      .exec();
+    res.render(
+      'deleteMessageForm',
+      {
+        title: 'Confirm delete',
+        message
+      }
+    )
+  } catch (err) {
+    return next(err);
+  }
+  
+}

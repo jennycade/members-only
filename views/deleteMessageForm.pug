@@ -1,0 +1,32 @@
+extends layout 
+
+block content 
+  if currentUser 
+    p.alert.alert-warning Are you sure you want to delete this message?
+    
+    article.bg-light.border.rounded.p-3.mb-3
+      p
+        small !{message.user.nickname} posted at 
+          time(datetime=message.createdAt) !{message.formattedCreatedAt}
+      p.mb-0 !{message.text}
+
+    form(action='', method='post')
+      input.form-control(
+          type='hidden'
+          name='messageId'
+          id='messageId'
+          required
+          value=message._id
+        )
+      .mb-3
+        input.btn.btn-danger(
+          type='submit'
+          value='Delete'
+        )
+        |  
+        a.btn.btn-outline-secondary(
+          href='./'
+          role='button'
+        ) Cancel 
+  else
+    p.alert.alert-danger You are not logged in.

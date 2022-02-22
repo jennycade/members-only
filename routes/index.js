@@ -63,6 +63,8 @@ router.post('/create-message',
   messageController.processForm,
 );
 
+router.get('/delete/:id', messageController.getDeleteForm)
+
 /* authentication */
 
 // sign up form
