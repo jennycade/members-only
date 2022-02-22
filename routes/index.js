@@ -58,6 +58,11 @@ router.get('/create-message', (req, res) => {
   res.render('createMessageForm', {title: 'Create message'});
 });
 
+router.post('/create-message',
+  messageController.getValidationRules(),
+  messageController.processForm,
+);
+
 /* authentication */
 
 // sign up form
