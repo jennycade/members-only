@@ -63,7 +63,11 @@ router.post('/create-message',
   messageController.processForm,
 );
 
-router.get('/delete/:id', messageController.getDeleteForm)
+router.get('/delete/:id', messageController.getDeleteForm);
+router.post('/delete/:id',
+  messageController.getDeleteValidationRules(),
+  messageController.deletePost,
+);
 
 /* authentication */
 

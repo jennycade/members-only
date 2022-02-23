@@ -1,4 +1,5 @@
 const Message = require('../models/message');
+const User = require('../models/user');
 
 const { body, validationResult} = require('express-validator');
 
@@ -86,6 +87,32 @@ exports.getDeleteForm = async (req, res, next) => {
     )
   } catch (err) {
     return next(err);
+  } 
+}
+
+exports.getDeleteValidationRules = () => {
+  return [
+    body('messageId').escape(),
+  ];
+}
+
+exports.deletePost = async (req, res, next) => {
+  try {
+    // confirm that user is logged in
+    const currentUser = await User.findById(res.locals.currentUser._id).exec();
+    if (currentUser === null) {
+      const err = new Error(`User not signed in`);
+      err.status = 401;
+      throw err;
+    }
+
+    // find and delete the message
+    const message = await Message.findByIdAndRemove(req.body.messageId).exec();
+
+    // redirect home
+    res.redirect('../');
+
+  } catch (err) {
+    return next(err);
   }
-  
 }
