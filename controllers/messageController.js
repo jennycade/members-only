@@ -8,7 +8,7 @@ exports.getMessageList = async (req, res, next) => {
     // get the messages
     const messages = await Message.find()
       .populate('user')
-      .sort('createdAt desc')
+      .sort('-createdAt')
       .exec();
     // render
     res.render(
