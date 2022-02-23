@@ -38,7 +38,13 @@ var indexRouter = require('./routes/index');
 var app = express();
 
 // deployment
-app.use(helmet());
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    'script-src': ["'self'", 'cdn.jsdelivr.net'],
+    'style-src': ["'self'", 'cdn.jsdelivr.net'],
+  }
+}));
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
