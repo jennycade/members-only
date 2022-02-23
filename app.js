@@ -11,6 +11,10 @@ const passport = require('passport');
 // mongoose
 const mongoose = require('mongoose');
 
+// deployment
+const compression = require('compression');
+const helmet = require('helmet');
+
 // connect to db
 require('dotenv').config();
 const mongoDb = process.env.MONGOURI;
@@ -32,6 +36,9 @@ var indexRouter = require('./routes/index');
 
 // start express
 var app = express();
+
+// deployment
+app.use(helmet());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -60,6 +67,9 @@ app.use((req, res, next) => {
   res.locals.currentUser = req.user;
   next();
 });
+
+// deployment
+app.use(compression());
 
 // routes
 app.use('/', indexRouter);
