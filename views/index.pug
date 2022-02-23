@@ -18,10 +18,11 @@ block content
             p.my-0 !{message.text}
           
           if currentUser 
-            div
-              a.btn.btn-outline-danger(
-                href=`delete/${message._id}`
-              ) Delete
+            if (currentUser.role === 'admin')
+              div
+                a.btn.btn-outline-danger(
+                  href=`delete/${message._id}`
+                ) Delete
         
 
     else 

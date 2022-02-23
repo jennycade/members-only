@@ -104,14 +104,17 @@ exports.deletePost = async (req, res, next) => {
       const err = new Error(`User not signed in`);
       err.status = 401;
       throw err;
+    } else if (currentUser.role !== 'admin') {
+      const err = new Error(`User not permitted to delete messages`);
+      err.status = 403;
+      throw err;
+    } else {
+      // find and delete the message
+      const message = await Message.findByIdAndRemove(req.body.messageId).exec();
+
+      // redirect home
+      res.redirect('../');
     }
-
-    // find and delete the message
-    const message = await Message.findByIdAndRemove(req.body.messageId).exec();
-
-    // redirect home
-    res.redirect('../');
-
   } catch (err) {
     return next(err);
   }
